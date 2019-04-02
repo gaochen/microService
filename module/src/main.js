@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store'
 import CaSliderPc from 'ca-slider-pc'
 import basicInfo from './utils/basicInfo'
 import Cookie from './utils/cookie'
@@ -26,7 +27,7 @@ Vue.prototype.$sendBasicInfo = function(basicInfo) {
     }
     args += i + '=' + encodeURIComponent(params[i])
   }
-  console.log(args)
+  // console.log(args)
   var img = new Image(1, 1)
   img.src = 'https://warriors.jd.com/log.gif?' + args
 }
@@ -40,7 +41,7 @@ router.beforeEach((to, from, next) => {
   // 当前时间戳
   Vue.prototype.$basicInfo.v.yt = now
   // 当前url
-  Vue.prototype.$basicInfo.v.p0 = {url : window.location.href}
+  Vue.prototype.$basicInfo.v.p0 = { url: window.location.href }
 
   // sid过期时间为1h
   let sid = Cookie.get('basic_sid')
@@ -48,7 +49,7 @@ router.beforeEach((to, from, next) => {
   if (!sid || !xt) {
     sid = generateUUID()
     xt = new Date().getTime()
-  
+
     Cookie.set('basic_sid', sid, 3600, '.ca-b2b.com')
     Cookie.set('basic_xt', xt, 3600, '.ca-b2b.com')
   }
@@ -59,7 +60,9 @@ router.beforeEach((to, from, next) => {
   let eid = generateUUID()
   Vue.prototype.$basicInfo.eid = eid
 
-  document.addEventListener('DOMContentLoaded', function(){
+  document.addEventListener(
+    'DOMContentLoaded',
+    function() {
       let domReady = new Date().getTime()
 
       // domComplete zt
@@ -68,9 +71,11 @@ router.beforeEach((to, from, next) => {
       Vue.prototype.$basicInfo.v.bt = domReady - now
       // domReady dt
       Vue.prototype.$basicInfo.v.dt = domReady - now
-  }, false);
+    },
+    false
+  )
 
-  window.onload=function(){
+  window.onload = function() {
     let onload = new Date().getTime()
 
     // onload
@@ -79,7 +84,7 @@ router.beforeEach((to, from, next) => {
     Vue.prototype.$basicInfo.v.ct = onload - now
 
     // let basicInfo = Object.arguments({}, Vue.prototype.$basicInfo)
-    console.log(Vue.prototype.$basicInfo)
+    // console.log(Vue.prototype.$basicInfo)
     Vue.prototype.$sendBasicInfo(Vue.prototype.$basicInfo)
   }
 
@@ -88,18 +93,22 @@ router.beforeEach((to, from, next) => {
 
 Vue.directive('stat', {
   bind: (el, binding) => {
-    el.addEventListener('click', (event) => {
+    el.addEventListener('click', event => {
       const value = binding.value
-      console.log(value.poi())
+      // console.log(value.poi())
 
       // 点击类型，预定义
 
       // 位置信息
       Vue.prototype.$basicInfo.v.p0.poi = value.poi
       // text
-      Vue.prototype.$basicInfo.v.p0.text = event.srcElement ? event.srcElement.innerText : event.target.innerText
+      Vue.prototype.$basicInfo.v.p0.text = event.srcElement
+        ? event.srcElement.innerText
+        : event.target.innerText
       // desc
-      Vue.prototype.$basicInfo.v.p0.desc = event.srcElement ? event.srcElement.innerText : event.target.innerText
+      Vue.prototype.$basicInfo.v.p0.desc = event.srcElement
+        ? event.srcElement.innerText
+        : event.target.innerText
       // url
       Vue.prototype.$basicInfo.v.p0.url = window.location.href
 
@@ -133,6 +142,7 @@ Vue.directive('stat', {
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

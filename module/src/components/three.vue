@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    主项目第一个页面
+    子项目第一个页面
     Message: {{ message }}
     <br>
     <button @click="message = null">click here to set message to null and provoke watcher error</button>
@@ -8,19 +8,19 @@
             Name: <b>{{ person.name }}</b> - Zip: {{ person.address.zip }}
         </div> -->
     <h1 @click="test" v-stat="{poi: inputValue, router: $route.name}" :content="`search|mall|${inputValue}`">搜索</h1>
-    <input type="text" v-model="inputValue" @click="goTo('/university/three')">
+    <input type="text" v-model="inputValue" @click="goTo('/university/four')">
     <div class="slider-demo">
-      <!-- <ca-slider-pc :options="options" :dataList="urlList">
-      </ca-slider-pc> -->
+      <ca-slider-pc :options="options" :dataList="urlList">
+      </ca-slider-pc>
       <!-- <sliderContainer :options="options">
                 <sliderItem v-for="(item, index) in urlList" :key="index">
                     <img class="slider-image" :src="item" alt="">
                 </sliderItem>
             </sliderContainer> -->
     </div>
-    <!-- <div class="youjian" oncontextmenu="return false;"> -->
-    <!-- <img src="https://m.hexiehealth.com/abwx_cms/up_load/20180329095447_573.jpg" oncontextmenu="return false;" alt=""> -->
-    <!-- </div> -->
+    <div class="youjian" oncontextmenu="return false;">
+      <!-- <img src="https://m.hexiehealth.com/abwx_cms/up_load/20180329095447_573.jpg" oncontextmenu="return false;" alt=""> -->
+    </div>
   </div>
 </template>
 
@@ -58,16 +58,16 @@ export default {
   },
   mounted() {
     console.log(this.$store.state.language)
-    // let options = {
-    //   title: '页面1',
-    //   description: '这是页面one',
-    //   keywords: 'one,page-one'
-    // }
-    // this.$setMeta(options)
+    let options = {
+      title: '页面1',
+      description: '这是页面one',
+      keywords: 'one,page-one'
+    }
+    this.$setMeta(options)
 
-    // axios.get('http://192.168.10.153:3000/get').then(function(response) {
-    //   console.log(response)
-    // })
+    axios.get('http://192.168.10.153:3000/get').then(function(response) {
+      console.log(response)
+    })
   },
   computed: {
     name: function() {
